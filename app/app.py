@@ -10,6 +10,15 @@ this_directory = os.path.dirname(os.path.realpath(__file__))
 settings_file = os.path.abspath(os.path.join(this_directory, '.', 'settings.py'))
 app = Devicehub(auth=RolesAuth, validator=DeviceHubValidator, settings=settings_file, static_url_path='/static')
 
+try:
+    from eve_swagger import swagger
+except ImportError as e:
+    pass
+else:
+    app.register_blueprint(swagger)
+    from swagger_settings import SWAGGER
+    app.config['SWAGGER'] = SWAGGER
+
 from hooks import event_hooks
 
 event_hooks(app)
