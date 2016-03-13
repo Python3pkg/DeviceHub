@@ -32,12 +32,14 @@ def event_hooks(app):
     app.on_inserted_snapshot += materialize_test_hard_drives
     app.on_inserted_snapshot += materialize_erase_basic
 
+    from app.event.prove_usage.hooks import save_ip_of_request
+    setattr(app, 'on_insert_prove-usage', save_ip_of_request)
+
     from app.event.hooks import get_place, materialize_components, materialize_parent, set_place
     app.on_insert += get_place
     app.on_insert += set_place
     app.on_insert += materialize_components
     app.on_insert += materialize_parent
-
 
     from app.event.add.hooks import add_components
     app.on_inserted_add += add_components

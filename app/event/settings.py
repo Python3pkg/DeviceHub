@@ -125,7 +125,8 @@ event_sub_settings = {
     'datasource': event_settings['datasource'],
     'url': event_settings['url'] + '/',
     'extra_response_fields': EXTRA_RESPONSE_FIELDS,
-    'cache_control': event_settings['cache_control']
+    'cache_control': event_settings['cache_control'],
+    'resource_methods': ['POST']
 }
 
 event_with_one_device = copy.deepcopy(event)
