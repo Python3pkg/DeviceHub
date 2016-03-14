@@ -153,3 +153,8 @@ def redirect_on_browser(resource, request, lookup):
     """
     if request.accept_mimetypes.accept_html:
         raise Redirect()
+
+
+def set_if_not_none(dict, key, value):
+    if value is not None:
+        dict[key] = value

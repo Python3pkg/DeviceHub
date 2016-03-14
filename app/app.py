@@ -4,6 +4,7 @@ from eve.io.mongo import MongoJSONEncoder
 from flask.ext.cache import Cache
 
 from app.data_layer import DataLayer
+from app.geoip_factory import GeoIPFactory
 from app.request import RequestSignedJson
 from app.security.authentication import RolesAuth
 from app.validation import DeviceHubValidator
@@ -23,6 +24,7 @@ app.json_encoder = MongoJSONEncoder
 app.request_class = RequestSignedJson
 app.gpg = gnupg.GPG()
 cache = Cache(app, config={'CACHE_TYPE': 'simple'})
+app.geoip = GeoIPFactory(settings_file)
 
 from hooks import event_hooks
 

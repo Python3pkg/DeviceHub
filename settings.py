@@ -30,6 +30,13 @@ GRD_ACCOUNT = {
     'password': 'ereuse@grd'
 }
 
+# GeoIP
+GEO_IP_USE_WEB_SERVICE = False
+MAX_MIND_ACCOUNT = {
+    'user': None,
+    'license key': None
+}
+
 # Name of the central DB used only to store 'RESOURCES_USING_DEFAULT_DATABASE'
 MONGO_DBNAME = 'dh__accounts'
 
