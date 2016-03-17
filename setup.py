@@ -18,7 +18,8 @@ setup(
         'requests',
         'python-gnupg',  # To use gnupg, install gpg2
         'flask-cache',
-        'geoip2'
+        'geoip2',
+        'geojson'
     ],
     include_package_data=True,
     long_description="""

@@ -2,7 +2,7 @@ import calendar
 import datetime
 
 from flask import current_app
-from pymongo import DESCENDING
+from pymongo import DESCENDING, ASCENDING
 from werkzeug.datastructures import ImmutableList
 
 from app.app import cache
@@ -15,7 +15,7 @@ class Aggregation:
     """
 
     # For how much time is the data cached?
-    CACHE_TIMEOUT = 3600
+    CACHE_TIMEOUT = 0
 
     def __init__(self, resouce_name):
         self.resource_name = resouce_name
@@ -95,6 +95,51 @@ class Aggregation:
                 res['data'][-1][pos - 1] = org['devices'][i]
                 i += 1
         return res
+
+    def actual_positions(self, options):
+        """
+        Gets the last geolocation for every device
+        :param options:
+        :return:
+        """
+        pipeline = [
+            {
+                '$match': {
+                    'geo': {'$exists': True}
+                }
+            },
+            {
+                '$project': {
+                    'devices': {'$ifNull': ['$devices', ['$device']]},  # If not null returns $devices
+                    'geo': True,
+                    '_id': True,
+                    '@type': True
+                }
+            },
+            {
+                '$unwind': '$devices'
+            },
+            {
+                '$sort': {'devices': ASCENDING, '_created': ASCENDING}
+            },
+            {
+                '$group': {
+                    '_id': '$devices',
+                    'geo': {'$last': '$geo'},
+                    '@type': {'$last': '$@type'}
+                }
+            },
+            {
+                '$project': {
+                    '_id': False,
+                    'device': '$_id',
+                    'geo': '$geo',
+                    '@type': True
+                }
+            }
+        ]
+        a = self._aggregate(ImmutableList(pipeline))
+        return {'data': a}
 
     @cache.memoize(timeout=CACHE_TIMEOUT)
     def _aggregate(self, pipeline):

@@ -24,7 +24,7 @@ app.json_encoder = MongoJSONEncoder
 app.request_class = RequestSignedJson
 app.gpg = gnupg.GPG()
 cache = Cache(app, config={'CACHE_TYPE': 'simple'})
-app.geoip = GeoIPFactory(settings_file)
+app.geoip = GeoIPFactory()
 
 from hooks import event_hooks
 

@@ -31,10 +31,10 @@ GRD_ACCOUNT = {
 }
 
 # GeoIP
-GEO_IP_USE_WEB_SERVICE = False
+GEO_IP_USE_WEB_SERVICE = True
 MAX_MIND_ACCOUNT = {
-    'user': None,
-    'license key': None
+    'user': '110208',
+    'license key': 'ZhIsLhbGO8he'
 }
 
 # Name of the central DB used only to store 'RESOURCES_USING_DEFAULT_DATABASE'

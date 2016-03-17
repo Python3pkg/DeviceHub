@@ -31,6 +31,10 @@ rdfs = {
 }
 
 thing = dict(rdfs, **{
+    'name': {
+        'type': 'string',
+        'sink': 6,
+    },
     'url': {
         'type': 'url',
         'readonly': True,

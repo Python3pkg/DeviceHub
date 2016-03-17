@@ -1,46 +1,6 @@
-import copy
-
 import pymongo
 
-from app.schema import thing
-
-place = copy.deepcopy(thing)
-place.update({
-    'geo': {
-        'type': 'polygon',
-        'sink': -5,
-        'description': 'Set the area of the place. Be careful! Once set, you cannot update the area.',
-        'modifiable': False
-    },
-    'type': {
-        'type': 'string',
-        'allowed': ['Department', 'Zone', 'Warehouse', 'CollectionPoint']
-    },
-    'devices': {
-        'type': 'list',
-        'schema': {
-            'type': 'string',
-            'data_relation': {
-                'resource': 'devices',
-                'field': '_id',
-                'embeddable': True
-            }
-        },
-        'default': [],
-        'unique_values': True
-    },
-    'byUser': {
-        'type': 'objectid',
-        'data_relation': {
-            'resource': 'accounts',
-            'field': '_id',
-            'embeddable': True
-        },
-        'readonly': True
-    }
-})
-place['label']['required'] = True
-place['@type']['allowed'] = ['Place']
+from app.place.schema import place
 
 place_settings = {
     'resource_methods': ['GET', 'POST'],
@@ -55,25 +15,3 @@ place_settings = {
         'geo': [('components', pymongo.GEO2D)],
     }
 }
-
-"""  'children': {  # inner places
-        'type': 'list',
-        'schema': {
-            'type': 'objectid',
-            'data_relation': {
-                'resource': 'places',
-                'field': '_id',
-                'embeddable': True
-            }
-        }
-    },
-    'parent': {
-        'type': 'objectid',
-        'data_relation': {
-            'resource': 'places',
-            'field': '_id',
-            'embeddable': True
-        },
-        # todo can I be the child of this parent?
-    },
-"""
