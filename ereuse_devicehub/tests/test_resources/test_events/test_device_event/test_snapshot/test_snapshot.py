@@ -433,3 +433,26 @@ class TestSnapshot(TestEvent):
         self.assert422(status)
         self.set_superuser()
         self.creation(snapshot, self.get_num_events(snapshot))
+
+    def test_pid(self):
+        snapshot = self.get_fixture(self.SNAPSHOT, '71a4 eee-pc erasure real')
+        snapshot['device']['pid'] = 'fooPid'
+        num_events = self.get_num_events(snapshot)
+        device_id = self.creation(snapshot, num_events)
+        device, _ = self.get(self.DEVICES, '', device_id)
+        assert_that(device).contains('pid')
+        assert_that(device['pid']).is_equal_to('fooPid')
+        # Let's make the same snapshot but changing the pid
+        # The system should detect a mismatch between the hid and the pid
+        second_snapshot = self.get_fixture(self.SNAPSHOT, '71a4 eee-pc erasure real')
+        second_snapshot['device']['pid'] = 'barPid'
+        _, status = self.post('{}/{}'.format(self.DEVICE_EVENT, self.SNAPSHOT), second_snapshot)
+        self.assert422(status)
+        # Let's make a different snapshot but with the same pid
+        # The system should detect that there is already an existing pid with different hid
+        snapshot_vaio = self.get_json_from_file(self.RESOURCES_PATH + self.REAL_DEVICES[1])
+        snapshot_vaio['device']['pid'] = 'fooPid'
+        _, status = self.post('{}/{}'.format(self.DEVICE_EVENT, self.SNAPSHOT), snapshot_vaio)
+        self.assert422(status)
+
+
