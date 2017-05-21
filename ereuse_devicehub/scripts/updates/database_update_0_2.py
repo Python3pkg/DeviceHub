@@ -16,10 +16,10 @@ class DatabaseUpdate02:
         for database in app.config['DATABASES']:
             # We need to have an active request to 'trick' set_database and work with the database we want
             with app.test_request_context('/{}/devices'.format(database)):
-                print('Starting update process for database {}'.format(AccountDomain.get_requested_database()))
+                print(('Starting update process for database {}'.format(AccountDomain.get_requested_database())))
                 app.auth._set_database(True)
                 self.materialize_component_info()
-                print('Database {} successfully updated.'.format(AccountDomain.get_requested_database()))
+                print(('Database {} successfully updated.'.format(AccountDomain.get_requested_database())))
 
     @staticmethod
     def materialize_component_info():

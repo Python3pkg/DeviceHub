@@ -180,7 +180,7 @@ class TestMigrate(TestDeviceEvent):
         full_snapshots = []
         this_directory = os.path.dirname(os.path.realpath(__file__))
         file_directory = os.path.join(this_directory, '..', 'test_snapshot', 'resources', '2015-12-09')
-        for i, filename in zip(range(0, 15), os.listdir(file_directory)):
+        for i, filename in zip(list(range(0, 15)), os.listdir(file_directory)):
             if 'json' in filename:
                 snapshot = self.get_json_from_file(filename, file_directory)
                 # This is optional. Let's add a random rid/pid/gid to ensure this does not affect the process
@@ -194,7 +194,7 @@ class TestMigrate(TestDeviceEvent):
             event = self.post_and_check('{}/{}'.format(self.DEVICE_EVENT, 'register'), placeholder)
             devices_id.append(event['device'])
         tokens = self.token_b, self.token_c, self.token_d
-        for db, token, i in zip(self.app.config['DATABASES'][1:], tokens, range(0, 3)):
+        for db, token, i in zip(self.app.config['DATABASES'][1:], tokens, list(range(0, 3))):
             f_migrate_to = self.get_fixture('migrate', 'migrate_to')
             f_migrate_to['devices'] = devices_id[(i * 5):(i * 5 + 5)]
             f_migrate_to['to']['database'] = db

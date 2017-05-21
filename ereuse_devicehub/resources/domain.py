@@ -1,5 +1,5 @@
 from bson.objectid import ObjectId
-from ereuse_devicehub.exceptions import StandardError
+from ereuse_devicehub.exceptions import Exception
 from ereuse_devicehub.resources.resource import ResourceSettings
 from ereuse_devicehub.utils import ClassProperty
 from flask import current_app
@@ -86,5 +86,5 @@ class Domain:
         return '{}/{}'.format(current_app.config['BASE_URL_FOR_AGENTS'], cls.path_for(database, identifier))
 
 
-class ResourceNotFound(StandardError):
+class ResourceNotFound(Exception):
     status_code = 422

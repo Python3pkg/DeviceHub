@@ -87,10 +87,10 @@ class DeviceHubValidator(Validator):
             self._error(field, json_util.dumps({'ForbiddenToWrite': self.document}))
 
     def _validate_or(self, document):
-        for field_name, definition in self.schema.items():
+        for field_name, definition in list(self.schema.items()):
             if 'or' in definition:
                 field_names = set([field_name] + definition['or'])
-                if field_names.isdisjoint(document.keys()):
+                if field_names.isdisjoint(list(document.keys())):
                     self._error(next(iter(field_names)),
                                 'You need at least one of the following: {}'.format(field_names))
 
@@ -108,7 +108,7 @@ class DeviceHubValidator(Validator):
     def _validate_dh_if_value_require(self, condition: tuple, field: str, value):
         desired_value, fields = condition
         if value == desired_value:
-            if not all(other_field in self.document.keys() for other_field in fields):
+            if not all(other_field in list(self.document.keys()) for other_field in fields):
                 self._error(field, "When {} is {}, you need to send: {}".format(field, desired_value, fields))
 
     def _get_resource(self, unique, field, value, query):

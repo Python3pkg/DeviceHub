@@ -38,7 +38,7 @@ def sanitize_event(d: dict):
     :return:
     """
     new = {}
-    for k, v in d.items():
+    for k, v in list(d.items()):
         if isinstance(v, dict):
             v = sanitize_event(v)
         elif k == 'components':

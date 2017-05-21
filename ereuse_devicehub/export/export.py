@@ -15,7 +15,7 @@ from flask import request
 from pyexcel_webio import FILE_TYPE_MIME_TABLE as REVERSED_FILE_TYPE_MIME_TABLE
 from werkzeug.exceptions import NotAcceptable
 
-FILE_TYPE_MIME_TABLE = dict(zip(REVERSED_FILE_TYPE_MIME_TABLE.values(), REVERSED_FILE_TYPE_MIME_TABLE.keys()))
+FILE_TYPE_MIME_TABLE = dict(list(zip(list(REVERSED_FILE_TYPE_MIME_TABLE.values()), list(REVERSED_FILE_TYPE_MIME_TABLE.keys()))))
 
 
 @crossdomain(origin='*', headers=['Content-Type', 'Authorization'])
@@ -108,7 +108,7 @@ class SpreadsheetTranslator(ResourcesTranslator):
         field_names = ['Label ID', 'Identifier', 'Serial Number', 'Model', 'Manufacturer', 'CPU', 'RAM (GB)', 'HDD (MB)']
         other_field_names = SortedSet()
         for resource, _ in resources:
-            other_field_names = other_field_names | resource.keys()
+            other_field_names = other_field_names | list(resource.keys())
         field_names += list(other_field_names - set(field_names))
         spreadsheet = defaultdict(list)
         for resource, _ in resources:

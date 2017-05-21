@@ -60,7 +60,7 @@ class ResourceTranslator(Translator):
         :return: The translated resource
         """
         translated = dict()
-        fields = dict(self.generic_dict, **self.specific_dict.get(resource['@type'], {})).items()
+        fields = list(dict(self.generic_dict, **self.specific_dict.get(resource['@type'], {})).items())
         for final_name, (method, *original_name) in fields:
             value = resource.get(original_name[0] if len(original_name) > 0 else final_name)
             if value is not None:

@@ -1,8 +1,8 @@
-from ereuse_devicehub.exceptions import StandardError, SchemaError
+from ereuse_devicehub.exceptions import Exception, SchemaError
 from ereuse_devicehub.resources.domain import ResourceNotFound
 
 
-class HidError(StandardError):
+class HidError(Exception):
     status_code = 422
     title = 'Cannot compute hid'
 
@@ -19,5 +19,5 @@ class DeviceNotFound(ResourceNotFound):
     pass
 
 
-class NoDevicesToProcess(StandardError):
+class NoDevicesToProcess(Exception):
     status_code = 400

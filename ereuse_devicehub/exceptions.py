@@ -10,7 +10,7 @@ class BasicError(Exception):
         return self.body
 
 
-class StandardError(BasicError):
+class Exception(BasicError):
     message = None
 
     def __init__(self, message=""):
@@ -31,7 +31,7 @@ class StandardError(BasicError):
         }
 
 
-class SchemaError(StandardError):
+class SchemaError(Exception):
     status_code = 422
 
     def __init__(self, field=None, message=None):
@@ -48,7 +48,7 @@ class SchemaError(StandardError):
         }
 
 
-class UnauthorizedToUseDatabase(StandardError):
+class UnauthorizedToUseDatabase(Exception):
     status_code = 401
     message = 'User has no access to this database.'
 
@@ -63,7 +63,7 @@ class InnerRequestError(BasicError):
         super().__init__(info, status_code)
 
 
-class WrongCredentials(StandardError):
+class WrongCredentials(Exception):
     """
     Error when login and user/pass do not match.
     """

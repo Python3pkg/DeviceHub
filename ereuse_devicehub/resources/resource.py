@@ -3,6 +3,7 @@ import inspect
 from collections import Sequence
 
 from ereuse_devicehub.utils import Naming
+import collections
 
 
 class Resource:
@@ -69,12 +70,12 @@ class Resource:
             :returns: A deep copied dictionary
         """
         attributes_to_remove = [] if attributes_to_remove is None else attributes_to_remove
-        for key in dict(attributes).keys():
+        for key in list(dict(attributes).keys()):
             if key.startswith('__') or key in attributes_to_remove:
                 del attributes[key]
             else:
                 attribute = getattr(cls, key)
-                if callable(attribute) and not (inspect.isclass(attribute) and issubclass(attribute, Resource)):
+                if isinstance(attribute, collections.Callable) and not (inspect.isclass(attribute) and issubclass(attribute, Resource)):
                     del attributes[key]
 
         return copy.deepcopy(attributes)

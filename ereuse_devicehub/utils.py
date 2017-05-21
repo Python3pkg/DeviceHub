@@ -141,7 +141,7 @@ class NestedLookup:
                     yield result
 
         if isinstance(document, dict):
-            for k, v in document.items():
+            for k, v in list(document.items()):
                 if operation(k, v):
                     references.append((document, k))
                     yield v

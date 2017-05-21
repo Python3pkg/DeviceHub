@@ -1,7 +1,7 @@
 import calendar
 import datetime
 
-from ereuse_devicehub.exceptions import StandardError
+from ereuse_devicehub.exceptions import Exception
 from ereuse_devicehub.utils import cache
 from flask import current_app
 from pymongo import DESCENDING
@@ -100,5 +100,5 @@ class Aggregation:
         return current_app.data.aggregate(self.resource_name, pipeline)
 
 
-class AggregationError(StandardError):
+class AggregationError(Exception):
     status_code = 400

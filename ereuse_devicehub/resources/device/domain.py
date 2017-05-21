@@ -54,7 +54,7 @@ class DeviceDomain(Domain):
     @classproperty
     def uid_fields(cls):
         """Returns the fields that are uids."""
-        return {name for name, field in cls.resource_settings._schema.actual_fields().items() if 'uid' in field}
+        return {name for name, field in list(cls.resource_settings._schema.actual_fields().items()) if 'uid' in field}
 
     @classproperty
     def external_synthetic_ids(cls):
@@ -68,7 +68,7 @@ class DeviceDomain(Domain):
         External ids are the ones not internally set by DeviceHub (the _id), as we do not usually want to treat
         _id as other external synthetic ids.
         """
-        return {n for n, field in cls.resource_settings._schema.actual_fields().items() if 'externalSynthetic' in field}
+        return {n for n, field in list(cls.resource_settings._schema.actual_fields().items()) if 'externalSynthetic' in field}
 
     @staticmethod
     def hid(manufacturer: str, serial_number: str, model: str) -> str:

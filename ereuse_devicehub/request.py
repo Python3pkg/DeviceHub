@@ -1,4 +1,4 @@
-from ereuse_devicehub.exceptions import StandardError
+from ereuse_devicehub.exceptions import Exception
 from flask import Request, g
 from flask import json, current_app
 from flask.wrappers import _missing, _get_data
@@ -54,6 +54,6 @@ class RequestSignedJson(Request):
         return rv
 
 
-class SignatureCannotBeVerified(StandardError):
+class SignatureCannotBeVerified(Exception):
     status_code = 400
     message = "The signature of the file cannot be verified. Have you uploaded the Public key?"

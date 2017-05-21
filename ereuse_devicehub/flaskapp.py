@@ -146,7 +146,7 @@ class DeviceHub(Eve):
             return response
         else:
             schemas = json.loads(response.data.decode())
-            for resource_type, schema in schemas.items():
+            for resource_type, schema in list(schemas.items()):
                 settings = self.config['DOMAIN'][resource_type]
                 schema['_settings'] = {
                     'url': settings['url'],

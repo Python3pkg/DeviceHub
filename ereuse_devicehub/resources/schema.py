@@ -21,7 +21,7 @@ class UnitCodes:
 
     @classmethod
     def humanize(cls, code_to_search):
-        for human_name, code in vars(cls).items():
+        for human_name, code in list(vars(cls).items()):
             if code == code_to_search:
                 return human_name
 

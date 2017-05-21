@@ -9,5 +9,5 @@ from ereuse_devicehub.resources.resource import Resource
     EventSubSettingsMultipleDevices) as generic types are.
 """
 
-for (generic_type, settings) in DeviceEventDomain.GENERIC_TYPES.items():
+for (generic_type, settings) in list(DeviceEventDomain.GENERIC_TYPES.items()):
     Resource.create(generic_type, EventWithDevices, {}, EventSubSettingsMultipleDevices, settings)

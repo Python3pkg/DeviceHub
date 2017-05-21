@@ -1,4 +1,4 @@
-from ereuse_devicehub.exceptions import StandardError
+from ereuse_devicehub.exceptions import Exception
 from ereuse_devicehub.resources.device.component.domain import ComponentDomain
 from ereuse_devicehub.resources.device.domain import DeviceDomain
 from ereuse_devicehub.resources.domain import Domain
@@ -66,12 +66,12 @@ class PlaceDomain(Domain):
         current_app.data.driver.db['devices'].update_one({'_id': device_id}, {'$unset': {'place': ''}})
 
 
-class CannotDeleteIfHasEvent(StandardError):
+class CannotDeleteIfHasEvent(Exception):
     status_code = 400
     message = 'Delete all the events performed in the place before deleting the place itself.'
 
 
-class NoPlaceForGivenCoordinates(StandardError):
+class NoPlaceForGivenCoordinates(Exception):
     """
     We throw this error if given coordinates do not match any existing place.
     We just throw it in particular cases. Example: Receive and Location.
@@ -80,7 +80,7 @@ class NoPlaceForGivenCoordinates(StandardError):
     message = 'There is no place in such coordinates'
 
 
-class CoordinatesAndPlaceDoNotMatch(StandardError):
+class CoordinatesAndPlaceDoNotMatch(Exception):
     """
     Similar as NoPlaceForGivenCoordinates, this error is thrown when user supplies coordinates
     and a place, and they differ.

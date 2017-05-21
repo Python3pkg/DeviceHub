@@ -3,7 +3,7 @@ import json
 
 from pymongo import MongoClient
 
-from ereuse_devicehub.exceptions import StandardError
+from ereuse_devicehub.exceptions import Exception
 from ereuse_devicehub.resources.account.domain import AccountDomain
 from ereuse_devicehub.resources.account.hooks import hash_password, generate_token
 
@@ -60,7 +60,7 @@ def create_account(email: str, password: str, databases: list,
     return returned_account, AccountDomain.hash_token(returned_account['token'])
 
 
-class UserAlreadyExists(StandardError):
+class UserAlreadyExists(Exception):
     message = 'User already exists'
     code = 309
 
@@ -88,6 +88,6 @@ if __name__ == '__main__':
     account, hashed_token = create_account(**args)
     account['_id'] = str(account['_id'])
     print('Account:')
-    print(json.dumps(account, indent=4))
+    print((json.dumps(account, indent=4)))
     print('Hashed token for REST:')
     print(hashed_token)

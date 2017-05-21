@@ -36,8 +36,8 @@ class EventProcessor:
         :return: A list of the executed events
         """
         log = []  # log done events
-        for event_name, common_reference_dict in self.events.items():
-            for reference, unique in common_reference_dict.items():
+        for event_name, common_reference_dict in list(self.events.items()):
+            for reference, unique in list(common_reference_dict.items()):
                 device = self.references[reference]
                 log.append(execute_post_internal(Naming.resource(event_name), {
                     '@type': event_name,

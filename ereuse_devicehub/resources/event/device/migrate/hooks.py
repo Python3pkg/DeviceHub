@@ -58,7 +58,7 @@ def _remove_devices_from_places(migrate):
 
 
 def _update_same_as(returned_same_as: dict):
-    for url, same_as in returned_same_as.items():
+    for url, same_as in list(returned_same_as.items()):
         _id = url.split('/')[-1]
         device = DeviceDomain.get_one({'_id': _id})
         same_as = set(device.get('sameAs', [])) | set(same_as)

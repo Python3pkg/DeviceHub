@@ -1,7 +1,7 @@
 import base64
 
 from bson.objectid import ObjectId
-from ereuse_devicehub.exceptions import WrongCredentials, BasicError, StandardError
+from ereuse_devicehub.exceptions import WrongCredentials, BasicError, Exception
 from ereuse_devicehub.resources.account.role import Role
 from ereuse_devicehub.resources.account.settings import AccountSettings
 from ereuse_devicehub.resources.domain import Domain, ResourceNotFound
@@ -58,7 +58,7 @@ class AccountDomain(Domain):
         x = request.headers.environ['HTTP_AUTHORIZATION']
         header = parse_authorization_header(x)
         if header is None:
-            raise StandardError('The Authorization header is not well written: ' + x, 400)
+            raise Exception('The Authorization header is not well written: ' + x, 400)
         return header['username']
 
     @classmethod
@@ -107,7 +107,7 @@ class NotADatabase(BasicError):
     status_code = 400
 
 
-class CannotImportKey(StandardError):
+class CannotImportKey(Exception):
     status_code = 400
     message = "We could not import the key. Make sure it is a valid GPG Public key."
 
@@ -116,5 +116,5 @@ class UserNotFound(ResourceNotFound):
     pass
 
 
-class WrongHeader(StandardError):
+class WrongHeader(Exception):
     pass

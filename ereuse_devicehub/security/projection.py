@@ -37,11 +37,11 @@ def project(resource: str, item: dict):
     delete_fields = []
     if 'get_projection_blacklist' in app.config['DOMAIN'][resource]:  # We take note of the blacklisted fields
         blacklist = app.config['DOMAIN'][resource]['get_projection_blacklist']
-        for role, fields in blacklist.items():
+        for role, fields in list(blacklist.items()):
             if '*' == role or AccountDomain.actual['role'] <= role:
                 delete_fields += fields
     if 'get_projection_whitelist' in app.config['DOMAIN'][resource]:  # We remove from the blacklist the white ones
-        for role, fields in app.config['DOMAIN'][resource]['get_projection_whitelist'].items():
+        for role, fields in list(app.config['DOMAIN'][resource]['get_projection_whitelist'].items()):
             if role == 'author':
                 if (resource == 'account' and AccountDomain.actual['_id'] == item['_id']) or ('byUser' in item):
                     delete_fields -= fields
